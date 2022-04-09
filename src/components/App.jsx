@@ -1,3 +1,5 @@
+import Phonebook from '../components/Phonebook/Phonebook';
+
 export const App = () => {
-  return <div>React homework template</div>;
+  return <Phonebook />;
 };
