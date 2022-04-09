@@ -1,12 +1,20 @@
-// import React, { Component } from 'react';
-// import {} from './ContactList.styled.js';
+import { ConlactList, ConlactItem } from './ContactList.styled.js';
 
-// class ContactList extends Component {
-//    render() {
-//       return (
-
-//     );
-//   }
-// }
-
-// export default ContactList;
+export const ContactList = ({ contact, onContactDelete }) => {
+  <ul>
+    {contact.map(({ name, number, id }) => (
+      <li key={id}>
+        <p>{name}</p>
+        <p>{number}</p>
+        <button
+          type="button"
+          onClick={() => {
+            onContactDelete(id);
+          }}
+        >
+          Delete
+        </button>
+      </li>
+    ))}
+  </ul>;
+};
