@@ -19,32 +19,34 @@ class Phonebook extends Component {
     filter: '',
   };
 
-  formSubmitHendler = data => {
-    console.log(data);
-  };
+  addContact = (name, number) => {
+    const { contacts } = this.state;
 
-  addContact = contact => {
-    if (
-      this.state.contacts.some(
-        item => item.name.toLowerCase() === contact.name.toLowerCase()
-      )
-    ) {
-      alert('This contact is already exist!! Try one more time, please!');
-      return;
+    const contact = {
+      id: nanoid(),
+      name,
+      number,
+    };
+
+    for (const { name } of contacts) {
+      if (name === contact.name) {
+        return alert(`${contact.name} is already in contacts`);
+      }
     }
-    this.setState(prevState => ({
-      contacts: [...prevState.contacts, { ...contact, id: nanoid() }],
-    }));
+
+    this.setState(({ contacts }) => {
+      return {
+        contacts: [contact, ...contacts],
+      };
+    });
   };
 
-  onFilterHandleChange = filter => {
-    this.setState({ filter });
-  };
-
-  contactDelete = contactId => {
-    this.setState(prevstate => ({
-      contacts: prevstate.contact.filter(contact => contact.id !== contactId),
-    }));
+  contactDelete = deleteId => {
+    this.setState(({ contacts }) => {
+      return {
+        contacts: contacts.filter(({ id }) => id !== deleteId),
+      };
+    });
   };
 
   getFilteredContacts() {
@@ -53,16 +55,17 @@ class Phonebook extends Component {
     );
   }
 
+  onFilterHandleChange = filter => {
+    this.setState({ filter });
+  };
+
   render() {
     const { filter } = this.state;
-    const visivleContact = this.getFilteredContacts();
+    const visibleContact = this.getFilteredContacts();
     return (
       <div>
         <TitleContactFotm>Phonebook</TitleContactFotm>
-        <ContactForm
-          onSubmit={this.formSubmitHendler}
-          addContact={this.addContact}
-        />
+        <ContactForm addContact={this.addContact} />
 
         <TitleContact>Contacts</TitleContact>
         <Filter
@@ -70,7 +73,7 @@ class Phonebook extends Component {
           onFilterHandleChange={this.onFilterHandleChange}
         />
         <ContactList
-          contact={visivleContact}
+          contact={visibleContact}
           onContactDelete={this.contactDelete}
         />
       </div>
