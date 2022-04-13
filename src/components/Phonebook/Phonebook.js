@@ -19,26 +19,23 @@ class Phonebook extends Component {
     filter: '',
   };
 
-  addContact = (name, number) => {
-    const { contacts } = this.state;
+  addContact = newName => {
+    const searchName = this.state.contacts
+      .map(con => con.name)
+      .includes(newName.name);
 
-    const contact = {
-      id: nanoid(),
-      name,
-      number,
-    };
-
-    for (const { name } of contacts) {
-      if (name === contact.name) {
-        return alert(`${contact.name} is already in contacts`);
-      }
-    }
-
-    this.setState(({ contacts }) => {
-      return {
-        contacts: [contact, ...contacts],
+    if (searchName) {
+      alert(`${newName.name} is already in contacts`);
+    } else {
+      const contact = {
+        ...newName,
+        id: nanoid(),
       };
-    });
+
+      this.setState(prevState => ({
+        contacts: [...prevState.contacts, contact],
+      }));
+    }
   };
 
   contactDelete = deleteId => {
