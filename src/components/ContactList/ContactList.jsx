@@ -1,27 +1,22 @@
-import {
-  ConlactList,
-  ConlactItem,
-  Button,
-  NameNumber,
-} from './ContactList.styled.js';
+import { ConlactList } from './ContactList.styled.js';
 import PropTypes from 'prop-types';
+import ContactListItem from '../Contactitem/ContactItem';
 
 export const ContactList = ({ contact, onContactDelete }) => (
   <ConlactList>
     {contact.map(({ name, number, id }) => (
-      <ConlactItem key={id}>
-        <NameNumber>{name} :</NameNumber>
-        <NameNumber>{number}</NameNumber>
-        <Button type="button" onClick={() => onContactDelete(id)}>
-          Delete
-        </Button>
-      </ConlactItem>
+      <ContactListItem
+        key={id}
+        contactName={name}
+        contactNumber={number}
+        del={() => onContactDelete(id)}
+      />
     ))}
   </ConlactList>
 );
 
 ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(
+  contact: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,

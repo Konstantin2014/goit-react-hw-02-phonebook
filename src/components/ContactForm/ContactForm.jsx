@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, Label, Input, Button } from './ContactForm.styled';
 import { nanoid } from 'nanoid';
 import PropTypes from 'prop-types';
+
 class ContactForm extends Component {
   state = {
     name: '',
@@ -20,7 +21,7 @@ class ContactForm extends Component {
     const { name, number } = this.state;
     const { addContact } = this.props;
     event.preventDefault();
-    addContact(name, number);
+    addContact({ name, number });
     this.reset();
   };
 
