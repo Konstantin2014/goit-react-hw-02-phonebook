@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const ConlactItem = styled.li`
+export const ContactItem = styled.li`
   font-size: 25px;
   font-weight: 500;
   margin: 0;
